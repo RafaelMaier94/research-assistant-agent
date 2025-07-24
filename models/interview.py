@@ -20,11 +20,12 @@ from langchain_community.tools.tavily_search import TavilySearchResults
 from langchain_community.document_loaders import WikipediaLoader
 from langchain_core.messages import get_buffer_string
 
+from models.analyst import Analyst
 
 
-### Tavily web search
-tavily_search = TavilySearchResults(max_results=3)
-
-### LLM
-model = ChatGoogleGenerativeAI(model="gemini-2.0-flash")
-
+class InterviewState(MessagesState):
+    max_num_turns: int # Max number of turns of conversation
+    context: Annotated[list, operator.add]
+    analyst: Analyst
+    interview: str
+    sections: list
